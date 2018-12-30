@@ -3,12 +3,15 @@ package com.tmosest.androidtasktimer
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+private const val TAG = "MainActivity"
+
+class MainActivity : AppCompatActivity(), AddEditFragment.OnSaveClicked {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +34,25 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            R.id.menu_add_task -> {
+                taskEditRequest(null)
+            }
         }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun taskEditRequest(task: Task?) {
+        Log.d(TAG, "taskEditRequest: starts")
+        // create a new fragment to edit the task
+        val newFragment = AddEditFragment.newInstance(task)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, newFragment)
+            .commit()
+        Log.d(TAG, "taskEditRequest: done")
+    }
+
+    override fun onSaveClicked() {
+
     }
 }
