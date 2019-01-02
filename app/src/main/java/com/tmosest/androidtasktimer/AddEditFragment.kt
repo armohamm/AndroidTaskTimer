@@ -1,13 +1,13 @@
 package com.tmosest.androidtasktimer
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_add_edit.*
 
 private const val TAG = "AddEditFragment"
 private const val ARG_TASK = "param"
@@ -22,7 +22,6 @@ private const val ARG_TASK = "param"
  *
  */
 class AddEditFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var task: Task? = null
     private var listener: OnSaveClicked? = null
 
@@ -39,6 +38,14 @@ class AddEditFragment : Fragment() {
         Log.d(TAG, "onCreateView")
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_edit, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onActivityCreated: starts")
+        super.onActivityCreated(savedInstanceState)
+        btn_add_edit_task.setOnClickListener {
+            listener?.onSaveClicked()
+        }
     }
 
     fun onButtonPressed() {
